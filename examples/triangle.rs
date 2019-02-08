@@ -27,5 +27,5 @@ fn main() {
     }
 
 
-    draw::save(&canvas, "tmp/triangle.png");
+    draw::save(&canvas, "tmp/triangle.png").unwrap();
 }

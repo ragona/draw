@@ -87,6 +87,12 @@ impl From<Point> for (isize, isize) {
     }
 }
 
+impl From<[i32;2]> for Point {
+    fn from(arr: [i32;2]) -> Point {
+        Point::new(arr[0], arr[1])
+    }
+}
+
 // todo: Split this into multiple traits
 pub trait Drawable {
     fn width(&self) -> i32;
@@ -245,5 +251,13 @@ mod tests {
     #[test]
     fn test_point_dist() {
         assert_eq!(Point { x: -1, y: -1 }.dist(Point { x: 1, y: 1 }), 2)
+    }
+
+    #[test]
+    fn test_from_array() {
+        let a = [5, 5];
+        let b: Point = a.into();
+
+        assert_eq!(Point::new(5, 5), b);
     }
 }
