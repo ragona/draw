@@ -5,10 +5,8 @@ Toy rust library for drawing. Simple display list, vector and bitmap shapes. Int
 use draw::{self, Sprite, SpriteId, Rectangle, Pixel};
 
 let mut parent = Sprite::new(100, 100);
-let mut child = Rectangle::new(50, 50, Pixel::red());
+let mut child = Rectangle::new(50, 50, 25, 25, Pixel::red());
 
-child.transform.x = 25;
-child.transform.y = 25;
 parent.add_child(child);
 
 draw::save(&parent, "tests/img/example.png");
