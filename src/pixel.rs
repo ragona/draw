@@ -1,3 +1,5 @@
+// todo: This should be an Enum, and probably there is a good crate it should be replaced by.
+
 use rand::Rng;
 use std::cmp;
 use std::f32;
