@@ -1,9 +1,11 @@
 [package]
 name = "draw"
 version = "0.1.0"
-authors = ["ragona <ryanragona@gmail.com>"]
 edition = "2018"
-
+description = "A tiny drawing library"
+license = "MIT"
+authors = ["Ryan Ragona"]
+repository = "https://github.com/ragona/draw"
 [dependencies]
 rand = "0.6.4"
 num-complex = "0.2.1"
