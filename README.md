@@ -1,5 +1,5 @@
 # draw
-A tiny drawing library for Rust. Simple display list, vector and bitmap shapes. Intended to be used to produce single images, or image sequences for creating animated mp4 or gif files. 
+A tiny drawing library for Rust. Simple display list, vector and bitmap shapes. Intended to be used to produce single images, or image sequences for creating animated mp4 or gif files. Very early in development.
 
 ```rust
 use draw::{self, Sprite, SpriteId, Rectangle, Pixel};
