@@ -3,7 +3,6 @@
 //!
 //! # Summary
 //! Simple bitmap drawing library. Display lists, transparency, lines and simple vector shapes.
-//! Toy project created to learn Rust.
 //!
 //! # Examples
 //!

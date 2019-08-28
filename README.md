@@ -11,6 +11,30 @@ parent.add_child(child);
 
 draw::save(&parent, "tests/img/example.png");
 ```
+## Design
+`draw` is intended to be a friendly interface for creating images.
+
+### Modules
+
+#### `canvas`
+
+A `canvas` is a surface that can be drawn to. This will usually be the first thing that you create, and you'll add elements to it.
+
+#### `shapes`
+
+A collection of pre-defined shapes, such as `circle`, `rectangle`, `triangle`, etc. 
+
+#### `path`
+
+A custom shape defined by a series of points and curves. 
+
+#### `style`
+
+A struct that defines the visual appearance of an object, such as the fill and stroke.
+
+#### `container`
+
+A trait describing any element that can contain other elements. 
 
 ## Useful Commands
 

@@ -5,11 +5,11 @@ use super::*;
 pub type SpriteId = usize;
 
 pub struct Sprite {
-    children: Vec<Box<Drawable>>,
+    children: Vec<Box<dyn Drawable>>,
     transform: Transform,
     width: i32,
     height: i32,
-    partitions: Vec<Vec<Partition>>,
+    partitions: Vec<Vec<Partition>>, // todo: This probably should have been a quadtree
     slices: i32,
 }
 
@@ -179,7 +179,7 @@ impl Drawable for Sprite {
             for child_id in partition.children.iter().rev() {
                 let child = &self.children[*child_id];
                 if child.bounds().contains(x, y) {
-                    let transform = &child.transform(); // fix rotation
+                    let transform = &child.transform(); // todo: fix rotation
                     pixel += child.get_pixel(x - transform.x, y - transform.y);
                     if pixel.a == 255 {
                         break;
