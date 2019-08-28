@@ -22,11 +22,7 @@ A `canvas` is a surface that can be drawn to. This will usually be the first thi
 
 #### `shapes`
 
-A collection of pre-defined shapes, such as `circle`, `rectangle`, `triangle`, etc. 
-
-#### `path`
-
-A custom shape defined by a series of points and curves. 
+A collection of shapes, such as `circle`, `rectangle`, `triangle`, `polygon`, etc. 
 
 #### `style`
 
