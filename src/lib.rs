@@ -8,6 +8,7 @@ use crate::canvas::Canvas;
 use crate::shape::Shape;
 
 pub mod canvas;
+pub mod render;
 pub mod shape;
 pub mod style;
 
@@ -27,25 +28,25 @@ impl Drawing {
     }
 }
 
-/// Children are stored in a vector; this `usize` is a handle to access the child
-pub type ChildId = usize;
-
 #[cfg(test)]
 mod tests {
-    use crate::canvas::Canvas;
-    use crate::shape::Shape;
+    use super::*;
+
     use svg::node::element::path::Data;
     use svg::node::element::{Element, Path};
     use svg::{Document, Node};
+    use crate::render::svg::SvgRenderer;
 
     #[test]
-    fn test_rect() {
-        let rect = Shape::Rectangle {
+    fn basic_end_to_end() {
+        let mut canvas = Canvas::new(100, 100);
+        let drawing = Drawing::new(Shape::Rectangle {
             width: 50,
             height: 50,
-        };
+        });
 
-        let canvas = Canvas::new(100, 100);
+        canvas.add(drawing);
+        render::save(&canvas, "my_svg.svg", SvgRenderer{});
     }
 
     #[test]
