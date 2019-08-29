@@ -1,5 +1,5 @@
 [package]
-name = "draw2"
+name = "draw"
 version = "0.1.0"
 authors = ["ragona"]
 edition = "2018"
