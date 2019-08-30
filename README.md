@@ -1,15 +1,32 @@
 # draw
-A tiny drawing library for Rust. Simple display list, vector and bitmap shapes. Intended to be used to produce single images, or image sequences for creating animated mp4 or gif files. Very early in development.
+*WARNING: This library is in development! It's not usable yet.*
+
+A tiny drawing library for Rust. 
+Simple display list, vector and bitmap shapes. 
+Intended to be used to produce single images, or image sequences for creating animated mp4 or gif files. 
 
 ```rust
-use draw::{self, Sprite, SpriteId, Rectangle, Pixel};
+// create a canvas to draw on
+let mut canvas = Canvas::new(100, 100, None);
 
-let mut parent = Sprite::new(100, 100);
-let mut child = Rectangle::new(50, 50, 25, 25, Pixel::red());
+// create some drawings of rectangles
+let a = Drawing::new(Shape::Rectangle {
+    width: 50,
+    height: 50,
+});
 
-parent.add_child(child);
+let b = Drawing::new(Shape::Rectangle {
+    width: 10,
+    height: 10,
+});
 
-draw::save(&parent, "tests/img/example.png");
+// add those drawings to the canvas
+canvas.display_list.add(a);
+canvas.display_list.add(b);
+
+// save the canvas as an svg
+render::save(&canvas, "tests/svg/basic_end_to_end.svg", SvgRenderer::new())
+    .expect("Failed to save");
 ```
 
 ## Useful Commands
@@ -30,16 +47,4 @@ perf report
 ```
 
 ## Todo list
-- [ ] Split Drawable into multiple traits? (e.g. "Rotateable")
-- [ ] Anti-aliasing, float positioning?
-- [ ] Fix child transformations updating partition child bounds
-- [ ] Track corners like verticies instead of using bounding boxes
-- [ ] Add bitmap features (shear, brightness, multiply, dissolve)
-- [ ] Implement rotate for rectangles / sprites
-- [ ] Try 3 shear rotation for bitmaps
-- [ ] Visibility
-- [ ] Scaling
-- [ ] Scaled saves
-- [ ] Images
-- [ ] OpenGL rendering
-
+- [ ] Draw anything other than a rectangle

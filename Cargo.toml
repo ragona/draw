@@ -1,26 +1,12 @@
 [package]
 name = "draw"
 version = "0.1.0"
+authors = ["ragona"]
 edition = "2018"
-description = "A tiny drawing library"
-license = "MIT"
-authors = ["Ryan Ragona"]
-repository = "https://github.com/ragona/draw"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
 [dependencies]
-rand = "0.6.4"
-num-complex = "0.2.1"
-lazy_static = "1.2.0"
-itertools = "0.8"
-bresenham = "0.1.1"
-png = "0.14.0"
-rayon = "1.0.3"
-
-[dev-dependencies]
-criterion = "0.2"
-
-[[bench]]
-name = "benchmark_draw"
-harness = false
-
-[lib]
-bench = false
+svg = "0.5.12"
+cgmath = "0.17.0"
+palette = "0.4.1"
