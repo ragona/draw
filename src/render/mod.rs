@@ -1,4 +1,7 @@
 use std::io;
+use std::fs::File;
+use std::io::prelude::*;
+use std::path::Path;
 
 use crate::canvas::Canvas;
 
@@ -11,6 +14,10 @@ pub trait Renderer {
 }
 
 pub fn save(canvas: &Canvas, path: &str, renderer: impl Renderer) -> io::Result<()> {
+    let path = Path::new(path);
     let bytes = renderer.render(canvas);
+    let mut file = File::create(&path).expect("Failed to create file");
+    file.write_all(&bytes).expect("Failed to write file");
+
     Ok(())
 }
