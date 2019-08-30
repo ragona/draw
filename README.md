@@ -15,7 +15,7 @@ let a = Drawing::new(Shape::Rectangle {
     height: 50,
 });
 
-let b = Drawing::new(Shape::Rectangle {
+let mut b = Drawing::new(Shape::Rectangle {
     width: 10,
     height: 10,
 });
@@ -24,10 +24,19 @@ let b = Drawing::new(Shape::Rectangle {
 canvas.display_list.add(a);
 canvas.display_list.add(b);
 
+// move one around
+b.position.x = 25.0;
+b.position.y = 25.0;
+
 // save the canvas as an svg
 render::save(&canvas, "tests/svg/basic_end_to_end.svg", SvgRenderer::new())
     .expect("Failed to save");
 ```
+
+## Todo list
+- [ ] Draw anything other than a rectangle
+- [x] Positions
+- [ ] Styles 
 
 ## Useful Commands
 
@@ -45,6 +54,3 @@ export RUSTFLAGS='-g'
 perf record --call-graph=lbr cargo run --release
 perf report
 ```
-
-## Todo list
-- [ ] Draw anything other than a rectangle

@@ -1,3 +1,5 @@
+use cgmath::Point2;
+
 use crate::shape::Shape;
 
 pub mod canvas;
@@ -8,11 +10,13 @@ pub mod style;
 /// Drawings are stored in a vector; this `usize` is a handle to access the child
 pub type DrawingId = usize;
 
+pub type Position = Point2<f32>;
+
 pub struct Drawing {
     pub shape: Shape,
     pub display_list: DisplayList,
+    pub position: Point2<f32>,
     //    style,
-    //    position,
 }
 
 impl Drawing {
@@ -20,6 +24,7 @@ impl Drawing {
         Drawing {
             shape,
             display_list: DisplayList::new(),
+            position: Position::new(0.0, 0.0),
         }
     }
 }
@@ -67,10 +72,14 @@ mod tests {
             height: 50,
         });
 
-        let b = Drawing::new(Shape::Rectangle {
+        let mut b = Drawing::new(Shape::Rectangle {
             width: 10,
             height: 10,
         });
+
+        // move one around
+        b.position.x = 25.0;
+        b.position.y = 25.0;
 
         // add those drawings to the canvas
         canvas.display_list.add(a);

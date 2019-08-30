@@ -1,8 +1,8 @@
 use svg::Document;
 
+use crate::{Drawing, Position};
 use crate::render::Renderer;
 use crate::canvas::Canvas;
-use crate::Drawing;
 use crate::shape::Shape;
 
 /// Renders the canvas as an SVG
@@ -20,7 +20,8 @@ impl Renderer for SvgRenderer {
         let mut document = Document::new().set("viewBox", (0, 0, canvas.width, canvas.height));
         // first render the background
         if let Some(shape) = &canvas.background {
-            document = render_shape(shape, document);
+            let origin = Position::new(0.0, 0.0);
+            document = render_shape(shape, &origin, document);
         }
         // render all drawings from the bottom up
         for drawing in canvas.drawings() {
@@ -33,7 +34,7 @@ impl Renderer for SvgRenderer {
 
 fn render_drawing(drawing: &Drawing, mut document: Document) -> Document {
     // first, render this drawing's shape
-    document = render_shape(&drawing.shape, document);
+    document = render_shape(&drawing.shape, &drawing.position, document);
     // next, render each drawing from the bottom up
     for drawing in &drawing.display_list.drawings {
         document = render_drawing(drawing, document);
@@ -42,13 +43,13 @@ fn render_drawing(drawing: &Drawing, mut document: Document) -> Document {
     document
 }
 
-fn render_shape(shape: &Shape, mut document: Document) -> Document {
+fn render_shape(shape: &Shape, position: &Position, mut document: Document) -> Document {
     match shape {
         Shape::Rectangle {width, height} => {
             document = document.add(
                 svg::node::element::Rectangle::new()
-                .set("x", 0)
-                .set("y", 0)
+                .set("x", position.x)
+                .set("y", position.y)
                 .set("width", *width)
                 .set("height", *height)
                 .set("fill", "black")
