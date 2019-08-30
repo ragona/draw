@@ -1,5 +1,5 @@
-use crate::{Drawing, DisplayList};
 use crate::shape::Shape;
+use crate::{DisplayList, Drawing};
 
 pub struct Canvas {
     pub width: u32,

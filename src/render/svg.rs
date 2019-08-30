@@ -1,16 +1,17 @@
 use svg::Document;
 
-use crate::{Drawing, Position};
-use crate::render::Renderer;
 use crate::canvas::Canvas;
+use crate::render::Renderer;
 use crate::shape::Shape;
+use crate::style::Style;
+use crate::{Drawing, Position, RGB};
 
 /// Renders the canvas as an SVG
 pub struct SvgRenderer {}
 
 impl SvgRenderer {
     pub fn new() -> SvgRenderer {
-        SvgRenderer{}
+        SvgRenderer {}
     }
 }
 
@@ -21,7 +22,7 @@ impl Renderer for SvgRenderer {
         // first render the background
         if let Some(shape) = &canvas.background {
             let origin = Position::new(0.0, 0.0);
-            document = render_shape(shape, &origin, document);
+            document = render_shape(shape, &origin, &Style::default(), document);
         }
         // render all drawings from the bottom up
         for drawing in canvas.drawings() {
@@ -34,7 +35,7 @@ impl Renderer for SvgRenderer {
 
 fn render_drawing(drawing: &Drawing, mut document: Document) -> Document {
     // first, render this drawing's shape
-    document = render_shape(&drawing.shape, &drawing.position, document);
+    document = render_shape(&drawing.shape, &drawing.position, &drawing.style, document);
     // next, render each drawing from the bottom up
     for drawing in &drawing.display_list.drawings {
         document = render_drawing(drawing, document);
@@ -43,21 +44,36 @@ fn render_drawing(drawing: &Drawing, mut document: Document) -> Document {
     document
 }
 
-fn render_shape(shape: &Shape, position: &Position, mut document: Document) -> Document {
+fn render_shape(
+    shape: &Shape,
+    position: &Position,
+    style: &Style,
+    mut document: Document,
+) -> Document {
     match shape {
-        Shape::Rectangle {width, height} => {
-            document = document.add(
-                svg::node::element::Rectangle::new()
+        Shape::Rectangle { width, height } => {
+            let mut rect = svg::node::element::Rectangle::new()
                 .set("x", position.x)
                 .set("y", position.y)
                 .set("width", *width)
-                .set("height", *height)
-                .set("fill", "black")
-                .set("stroke", "gray")
-                .set("stroke-width", 1)
-            );
+                .set("height", *height);
+
+            if let Some(fill) = &style.fill {
+                rect = rect.set("fill", rgb_to_str(&fill.color));
+            }
+
+            if let Some(stroke) = &style.stroke {
+                rect = rect.set("stroke", rgb_to_str(&stroke.color));
+                rect = rect.set("stroke-width", format!("{}", stroke.width));
+            }
+
+            document = document.add(rect);
         }
     }
 
     document
+}
+
+fn rgb_to_str(color: &RGB) -> String {
+    format!("rgb({},{},{})", color.r, color.g, color.b)
 }

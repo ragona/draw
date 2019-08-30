@@ -7,6 +7,6 @@ readme = "README.md"
 repository = "https://github.com/ragona/draw"
 
 [dependencies]
+rgb = "0.8.14"
 svg = "0.5.12"
 cgmath = "0.17.0"
-palette = "0.4.1"
