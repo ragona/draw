@@ -9,11 +9,11 @@ pub struct Canvas {
 }
 
 impl Canvas {
-    pub fn new(width: u32, height: u32, background: Option<Shape>) -> Canvas {
+    pub fn new(width: u32, height: u32) -> Canvas {
         Canvas {
             width,
             height,
-            background,
+            background: None,
             display_list: DisplayList::new(),
         }
     }

@@ -66,44 +66,31 @@ mod tests {
     #[test]
     fn basic_end_to_end() {
         // create a canvas to draw on
-        let mut canvas = Canvas::new(
-            100,
-            100,
-            Some(Shape::Rectangle {
-                width: 100,
-                height: 100,
-            }),
-        );
+        let mut canvas = Canvas::new(100, 100);
 
-        // create some drawings of rectangles
-        let a = Drawing::new(Shape::Rectangle {
+        // create a rectangle
+        let mut rect = Drawing::new(Shape::Rectangle {
             width: 50,
             height: 50,
         });
 
-        let mut b = Drawing::new(Shape::Rectangle {
-            width: 10,
-            height: 10,
-        });
+        // move it around
+        rect.position.x = 25.0;
+        rect.position.y = 25.0;
 
-        // move one around
-        b.position.x = 25.0;
-        b.position.y = 25.0;
-
-        // give one a cool style
-        b.style = Style {
+        // give it a cool style
+        rect.style = Style {
             fill: Some(Fill {
-                color: RGB::new(255, 0, 0),
+                color: RGB::new(0, 0, 0),
             }),
             stroke: Some(Stroke {
                 width: 2,
-                color: RGB::new(0, 255, 0),
+                color: RGB::new(255, 0, 0),
             }),
         };
 
-        // add those drawings to the canvas
-        canvas.display_list.add(a);
-        canvas.display_list.add(b);
+        // add it to the canvas
+        canvas.display_list.add(rect);
 
         // save the canvas as an svg
         render::save(

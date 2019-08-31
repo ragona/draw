@@ -5,8 +5,7 @@ use crate::render::Renderer;
 use crate::shape::Shape;
 use crate::style::Style;
 use crate::{Drawing, Position, RGB};
-use svg::node::element::tag::{self, Rectangle};
-use svg::node::element::Element;
+use svg::node::element::{tag, Element};
 
 /// Renders the canvas as an SVG
 pub struct SvgRenderer {}
@@ -47,12 +46,7 @@ fn render_drawing(drawing: &Drawing, mut document: Document) -> Document {
     document
 }
 
-fn render_shape(
-    shape: &Shape,
-    position: &Position,
-    style: &Style,
-    mut document: Document,
-) -> Document {
+fn render_shape(shape: &Shape, position: &Position, style: &Style, document: Document) -> Document {
     let mut element;
     // start by setting the shape of the element
     match shape {
