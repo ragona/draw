@@ -66,7 +66,14 @@ mod tests {
     #[test]
     fn basic_end_to_end() {
         // create a canvas to draw on
-        let mut canvas = Canvas::new(100, 100, None);
+        let mut canvas = Canvas::new(
+            100,
+            100,
+            Some(Shape::Rectangle {
+                width: 100,
+                height: 100,
+            }),
+        );
 
         // create some drawings of rectangles
         let a = Drawing::new(Shape::Rectangle {

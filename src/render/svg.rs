@@ -1,10 +1,12 @@
-use svg::Document;
+use svg::{Document, Node};
 
 use crate::canvas::Canvas;
 use crate::render::Renderer;
 use crate::shape::Shape;
 use crate::style::Style;
 use crate::{Drawing, Position, RGB};
+use svg::node::element::tag::{self, Rectangle};
+use svg::node::element::Element;
 
 /// Renders the canvas as an SVG
 pub struct SvgRenderer {}
@@ -33,6 +35,7 @@ impl Renderer for SvgRenderer {
     }
 }
 
+/// Recursively render the drawing from the bottom up
 fn render_drawing(drawing: &Drawing, mut document: Document) -> Document {
     // first, render this drawing's shape
     document = render_shape(&drawing.shape, &drawing.position, &drawing.style, document);
@@ -50,28 +53,28 @@ fn render_shape(
     style: &Style,
     mut document: Document,
 ) -> Document {
+    let mut element;
+    // start by setting the shape of the element
     match shape {
         Shape::Rectangle { width, height } => {
-            let mut rect = svg::node::element::Rectangle::new()
-                .set("x", position.x)
-                .set("y", position.y)
-                .set("width", *width)
-                .set("height", *height);
-
-            if let Some(fill) = &style.fill {
-                rect = rect.set("fill", rgb_to_str(&fill.color));
-            }
-
-            if let Some(stroke) = &style.stroke {
-                rect = rect.set("stroke", rgb_to_str(&stroke.color));
-                rect = rect.set("stroke-width", format!("{}", stroke.width));
-            }
-
-            document = document.add(rect);
+            element = Element::new(tag::Rectangle);
+            element.assign("width", *width);
+            element.assign("height", *height);
         }
     }
-
-    document
+    // set the style of the element
+    if let Some(fill) = &style.fill {
+        element.assign("fill", rgb_to_str(&fill.color));
+    }
+    if let Some(stroke) = &style.stroke {
+        element.assign("stroke", rgb_to_str(&stroke.color));
+        element.assign("stroke-width", format!("{}", stroke.width));
+    }
+    // set the position of the element
+    element.assign("x", position.x);
+    element.assign("y", position.y);
+    //add the element to the document
+    document.add(element)
 }
 
 fn rgb_to_str(color: &RGB) -> String {
