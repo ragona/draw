@@ -81,7 +81,7 @@ mod tests {
         // give it a cool style
         rect.style = Style {
             fill: Some(Fill {
-                color: RGB::new(0, 0, 0),
+                color: RGB::new(75, 75, 75),
             }),
             stroke: Some(Stroke {
                 width: 2,
@@ -89,8 +89,15 @@ mod tests {
             }),
         };
 
-        // add it to the canvas
+        // put a circle in the middle of it
+        let mut circle = Drawing::new(Shape::Circle { radius: 10 });
+
+        circle.position.x = 50.0;
+        circle.position.y = 50.0;
+
+        // add them to the canvas
         canvas.display_list.add(rect);
+        canvas.display_list.add(circle);
 
         // save the canvas as an svg
         render::save(

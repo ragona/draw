@@ -44,9 +44,11 @@ render::save(
 ```
 
 ## Todo list
-- [ ] Draw anything other than a rectangle
+- [ ] Add a bunch more shapes
+- [ ] Clean up the SVG renderer shapes
+- [x] Draw anything other than a rectangle
 - [x] Positions
-- [ ] Styles 
+- [x] Styles 
 
 ## Useful Commands
 

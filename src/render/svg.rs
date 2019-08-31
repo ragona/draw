@@ -49,11 +49,20 @@ fn render_drawing(drawing: &Drawing, mut document: Document) -> Document {
 fn render_shape(shape: &Shape, position: &Position, style: &Style, document: Document) -> Document {
     let mut element;
     // start by setting the shape of the element
+    // todo: split this up
     match shape {
         Shape::Rectangle { width, height } => {
             element = Element::new(tag::Rectangle);
             element.assign("width", *width);
             element.assign("height", *height);
+            element.assign("x", position.x);
+            element.assign("y", position.y);
+        }
+        Shape::Circle { radius } => {
+            element = Element::new(tag::Circle);
+            element.assign("r", *radius);
+            element.assign("cx", position.x);
+            element.assign("cy", position.y);
         }
     }
     // set the style of the element
@@ -64,9 +73,6 @@ fn render_shape(shape: &Shape, position: &Position, style: &Style, document: Doc
         element.assign("stroke", rgb_to_str(&stroke.color));
         element.assign("stroke-width", format!("{}", stroke.width));
     }
-    // set the position of the element
-    element.assign("x", position.x);
-    element.assign("y", position.y);
     //add the element to the document
     document.add(element)
 }
