@@ -1,8 +1,9 @@
+//! Render Canvas to bitmap formats (PNG, JPG, etc...)
 use crate::render::Renderer;
 use crate::Canvas;
 
 /// Renders `Canvas` to a PNG format
-/// todo: Actually implement
+/// todo: Implement!
 pub struct PNGRenderer {}
 
 impl Renderer for PNGRenderer {

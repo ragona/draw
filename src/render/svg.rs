@@ -1,3 +1,6 @@
+//! Render `Canvas` to Scalable Vector Graphics (SVG) format
+//!
+//!
 use svg::{Document, Node};
 
 use crate::canvas::Canvas;
@@ -50,37 +53,15 @@ fn render_drawing(drawing: &Drawing, mut document: Document) -> Document {
 fn render_shape(shape: &Shape, position: &Position, style: &Style, document: Document) -> Document {
     let mut element;
     // start by setting the shape of the element
-    // todo: split this up
     match shape {
         Shape::Rectangle { width, height } => {
-            element = Element::new(tag::Rectangle);
-            element.assign("width", *width);
-            element.assign("height", *height);
-            element.assign("x", position.x);
-            element.assign("y", position.y);
+            element = rect(*width, *height, &position);
         }
         Shape::Circle { radius } => {
-            element = Element::new(tag::Circle);
-            element.assign("r", *radius);
-            element.assign("cx", position.x);
-            element.assign("cy", position.y);
+            element = circle(*radius, &position);
         }
         Shape::Line { start, points } => {
-            let mut data = Data::new().move_to((start.x, start.y));
-            for point in points {
-                match *point {
-                    LinePoint::Straight { point } => {
-                        data = data.line_to((point.x, point.y));
-                    }
-                    LinePoint::QuadraticBezierCurve { point, curve } => {
-                        data = data.quadratic_curve_to((curve.x, curve.x, point.x, point.y));
-                    }
-                    _ => unimplemented!(),
-                }
-            }
-            element = Element::new(tag::Path);
-            element.assign("d", data);
-            element.assign("fill", "transparent");
+            element = line(*start, points);
         }
     }
     // set the style of the element
@@ -97,4 +78,40 @@ fn render_shape(shape: &Shape, position: &Position, style: &Style, document: Doc
 
 fn rgb_to_str(color: &RGB) -> String {
     format!("rgb({},{},{})", color.r, color.g, color.b)
+}
+
+fn rect(width: u32, height: u32, position: &Position) -> Element {
+    let mut element = Element::new(tag::Rectangle);
+    element.assign("width", width);
+    element.assign("height", height);
+    element.assign("x", position.x);
+    element.assign("y", position.y);
+    element
+}
+
+fn circle(radius: u32, position: &Position) -> Element {
+    let mut element = Element::new(tag::Circle);
+    element.assign("r", radius);
+    element.assign("cx", position.x);
+    element.assign("cy", position.y);
+    element
+}
+
+fn line(start: Position, points: &Vec<LinePoint>) -> Element {
+    let mut data = Data::new().move_to((start.x, start.y));
+    for point in points {
+        match *point {
+            LinePoint::Straight { point } => {
+                data = data.line_to((point.x, point.y));
+            }
+            LinePoint::QuadraticBezierCurve { point, curve } => {
+                data = data.quadratic_curve_to((curve.x, curve.x, point.x, point.y));
+            }
+            _ => unimplemented!(),
+        }
+    }
+    let mut element = Element::new(tag::Path);
+    element.assign("d", data);
+    element.assign("fill", "transparent");
+    element
 }

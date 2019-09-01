@@ -1,5 +1,7 @@
+//! Vector object styles; Fill and Stroke data
 use crate::RGB;
 
+/// Shape fill
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Fill {
     pub color: RGB,
@@ -12,6 +14,7 @@ impl Fill {
     }
 }
 
+/// Shape stroke
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Stroke {
     pub width: u32,
@@ -24,6 +27,7 @@ impl Stroke {
     }
 }
 
+/// Optional Fill and Stroke
 #[derive(Default, Clone, Debug, PartialEq)]
 pub struct Style {
     pub fill: Option<Fill>,
@@ -31,6 +35,7 @@ pub struct Style {
 }
 
 impl Style {
+    /// Default empty style with no fill or stroke
     pub fn default() -> Style {
         Style {
             fill: None,
@@ -38,6 +43,7 @@ impl Style {
         }
     }
 
+    /// New style with both fill and stroke
     pub fn new(fill: Fill, stroke: Stroke) -> Style {
         Style {
             fill: Some(fill),
@@ -45,6 +51,7 @@ impl Style {
         }
     }
 
+    /// New style with only a solid fill color and no stroke
     pub fn filled(color: RGB) -> Style {
         Style {
             fill: Some(Fill::new(color)),
@@ -52,6 +59,7 @@ impl Style {
         }
     }
 
+    /// New style with only a stroke and no fill
     pub fn stroked(width: u32, color: RGB) -> Style {
         Style {
             fill: None,

@@ -1,5 +1,8 @@
+//! Shape data
 use crate::Position;
 
+/// Enum containing all supported shapes
+#[derive(Debug, Clone)]
 pub enum Shape {
     Rectangle {
         width: u32,
@@ -22,6 +25,9 @@ impl Shape {
         }
     }
 }
+
+/// Enum that describes the various types of lines
+#[derive(Debug, Copy, Clone)]
 pub enum LinePoint {
     Straight {
         point: Position,
@@ -37,6 +43,22 @@ pub enum LinePoint {
     },
 }
 
+/// Helper object for building lines; provides a better syntax than building a `Shape::Line`
+/// from scratch.
+///
+/// # Example
+///
+/// ```
+/// use draw::shape::LineBuilder;
+/// use draw::{Position, Shape};
+/// let mut line = LineBuilder::new(Position::new(0.0, 0.0));
+///
+/// line.line_to(Position{x: 50.0 ,y: 50.0 });
+/// line.line_to(Position{x: 50.0 ,y: 100.0 });
+///
+/// // Consume the builder, turn the line into a shape for use with the display list
+/// let shape: Shape = line.into();
+/// ```
 pub struct LineBuilder {
     start: Position,
     points: Vec<LinePoint>,
