@@ -64,6 +64,7 @@ fn render_shape(shape: &Shape, position: &Position, style: &Style, document: Doc
             element.assign("cx", position.x);
             element.assign("cy", position.y);
         }
+        Shape::StraightLine { points } => unimplemented!(),
     }
     // set the style of the element
     if let Some(fill) = &style.fill {
