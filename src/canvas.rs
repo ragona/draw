@@ -40,3 +40,22 @@ impl Canvas {
         &self.display_list.drawings
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn with_background() {
+        let canvas = Canvas::with_background(
+            50,
+            50,
+            Shape::Rectangle {
+                width: 50,
+                height: 50,
+            },
+        );
+
+        assert!(canvas.background.is_some());
+    }
+}

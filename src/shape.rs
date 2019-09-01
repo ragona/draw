@@ -29,13 +29,17 @@ impl Shape {
 /// Enum that describes the various types of lines
 #[derive(Debug, Copy, Clone)]
 pub enum LinePoint {
-    Straight {
-        point: Position,
-    },
-    QuadraticBezierCurve {
-        point: Position,
-        curve: Position,
-    },
+    /// A hard corner
+    /// `point` - end point of the line segment
+    Straight { point: Position },
+    /// Curve with single control point at `curve`
+    /// `point` - end point of the line segment
+    /// `curve` - position the line will curve towards
+    QuadraticBezierCurve { point: Position, curve: Position },
+    /// Curve with two control points
+    /// `point` - end point of the line segment
+    /// `curve_a` - control point that influences beginning of line
+    /// `curve_a` - control point that influences end of line
     CubicBezierCurve {
         point: Position,
         curve_a: Position,
