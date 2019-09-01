@@ -37,33 +37,38 @@ pub enum LinePoint {
     },
 }
 
-pub struct StraightLine {
+pub struct LineBuilder {
     start: Position,
-    points: Vec<Position>,
+    points: Vec<LinePoint>,
 }
 
-impl StraightLine {
-    pub fn new(start: Position) -> StraightLine {
-        StraightLine {
+impl LineBuilder {
+    pub fn new(start: Position) -> LineBuilder {
+        LineBuilder {
             start,
-            points: vec![start],
+            points: vec![],
         }
     }
 
-    pub fn line_to(&mut self, position: Position) {
-        self.points.push(position);
+    pub fn line_to(&mut self, point: Position) {
+        self.points.push(LinePoint::Straight { point });
+    }
+
+    pub fn curve_to(&mut self, point: Position, curve: Position) {
+        self.points
+            .push(LinePoint::QuadraticBezierCurve { point, curve })
+    }
+
+    pub fn to_shape(self) -> Shape {
+        Shape::Line {
+            start: self.start,
+            points: self.points,
+        }
     }
 }
 
-impl From<StraightLine> for Shape {
-    fn from(line: StraightLine) -> Shape {
-        Shape::Line {
-            start: line.start,
-            points: line
-                .points
-                .iter()
-                .map(|p| LinePoint::Straight { point: *p })
-                .collect(),
-        }
+impl From<LineBuilder> for Shape {
+    fn from(line: LineBuilder) -> Shape {
+        line.to_shape()
     }
 }

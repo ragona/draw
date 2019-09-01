@@ -72,6 +72,9 @@ fn render_shape(shape: &Shape, position: &Position, style: &Style, document: Doc
                     LinePoint::Straight { point } => {
                         data = data.line_to((point.x, point.y));
                     }
+                    LinePoint::QuadraticBezierCurve { point, curve } => {
+                        data = data.quadratic_curve_to((curve.x, curve.x, point.x, point.y));
+                    }
                     _ => unimplemented!(),
                 }
             }

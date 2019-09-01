@@ -2,8 +2,8 @@
 *WARNING: This library is in early development! Expect changes.*
 
 A tiny drawing library for Rust. 
-Simple display list, vector and bitmap shapes. 
-Intended to be used to produce single images, or image sequences for creating animated mp4 or gif files. 
+Simple display list and vector shapes. 
+Currently supports SVG output, designed to also support PNG and other formats.
 
 ## Example
 ```rust
@@ -44,13 +44,14 @@ render::save(
 ```
 
 ## Todo list
+- [ ] Lines
 - [ ] Testing
 - [ ] Add a bunch more shapes
 - [ ] Clean up the SVG renderer shapes
-- [ ] Lines
 - [x] Draw anything other than a rectangle
 - [x] Positions
 - [x] Styles 
+- [ ] Bitmap image output
 
 ## Useful Commands
 
