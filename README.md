@@ -44,6 +44,7 @@ render::save(
 ```
 
 ## Todo list
+- [ ] Testing
 - [ ] Add a bunch more shapes
 - [ ] Clean up the SVG renderer shapes
 - [x] Draw anything other than a rectangle
