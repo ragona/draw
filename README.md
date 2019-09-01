@@ -1,5 +1,5 @@
 # draw
-*WARNING: This library is in development! It's not usable yet.*
+*WARNING: This library is in early development! Expect changes.*
 
 A tiny drawing library for Rust. 
 Simple display list, vector and bitmap shapes. 
@@ -47,6 +47,7 @@ render::save(
 - [ ] Testing
 - [ ] Add a bunch more shapes
 - [ ] Clean up the SVG renderer shapes
+- [ ] Lines
 - [x] Draw anything other than a rectangle
 - [x] Positions
 - [x] Styles 
