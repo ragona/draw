@@ -105,7 +105,7 @@ fn line(start: Position, points: &Vec<LinePoint>) -> Element {
                 data = data.line_to((point.x, point.y));
             }
             LinePoint::QuadraticBezierCurve { point, curve } => {
-                data = data.quadratic_curve_to((curve.x, curve.x, point.x, point.y));
+                data = data.quadratic_curve_to((curve.x, curve.y, point.x, point.y));
             }
             _ => unimplemented!(),
         }
