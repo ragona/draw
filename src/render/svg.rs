@@ -67,6 +67,8 @@ fn render_shape(shape: &Shape, position: &Position, style: &Style, document: Doc
     // set the style of the element
     if let Some(fill) = &style.fill {
         element.assign("fill", rgb_to_str(&fill.color));
+    } else {
+        element.assign("fill", "transparent");
     }
     if let Some(stroke) = &style.stroke {
         element.assign("stroke", rgb_to_str(&stroke.color));
@@ -112,6 +114,5 @@ fn line(start: Position, points: &Vec<LinePoint>) -> Element {
     }
     let mut element = Element::new(tag::Path);
     element.assign("d", data);
-    element.assign("fill", "transparent");
     element
 }

@@ -30,6 +30,10 @@ fn basic_end_to_end() {
     let mut circle = Drawing::new(Shape::Circle { radius: 10 });
     circle.position.x = 50.0;
     circle.position.y = 50.0;
+    circle.style = Style::new(
+        Fill::new(RGB::new(255, 127, 255)),
+        Stroke::new(1, RGB::new(255, 0, 0)),
+    );
 
     // add them to the canvas
     canvas.display_list.add(rect);
