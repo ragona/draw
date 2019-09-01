@@ -2,9 +2,10 @@ use svg::{Document, Node};
 
 use crate::canvas::Canvas;
 use crate::render::Renderer;
-use crate::shape::Shape;
+use crate::shape::{LinePoint, Shape};
 use crate::style::Style;
 use crate::{Drawing, Position, RGB};
+use svg::node::element::path::Data;
 use svg::node::element::{tag, Element};
 
 /// Renders the canvas as an SVG
@@ -64,7 +65,20 @@ fn render_shape(shape: &Shape, position: &Position, style: &Style, document: Doc
             element.assign("cx", position.x);
             element.assign("cy", position.y);
         }
-        Shape::StraightLine { points } => unimplemented!(),
+        Shape::Line { start, points } => {
+            let mut data = Data::new().move_to((start.x, start.y));
+            for point in points {
+                match *point {
+                    LinePoint::Straight { point } => {
+                        data = data.line_to((point.x, point.y));
+                    }
+                    _ => unimplemented!(),
+                }
+            }
+            element = Element::new(tag::Path);
+            element.assign("d", data);
+            element.assign("fill", "transparent");
+        }
     }
     // set the style of the element
     if let Some(fill) = &style.fill {
