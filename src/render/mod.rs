@@ -5,6 +5,7 @@ use std::path::Path;
 
 use crate::canvas::Canvas;
 
+pub mod bitmap;
 pub mod svg;
 
 /// A renderer takes a &Canvas and returns a Vec of bytes.

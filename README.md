@@ -1,7 +1,7 @@
 # draw
 *WARNING: This library is in early development! Expect changes.*
 
-A tiny drawing library for Rust. 
+A small Rust library for 2D drawing. 
 Simple display list and vector shapes. 
 Currently supports SVG output, designed to also support PNG and other formats.
 
@@ -44,7 +44,8 @@ render::save(
 ```
 
 ## Todo list
-- [ ] Lines
+- [ ] Bezier curves
+- [x] Lines
 - [ ] Testing
 - [ ] Add a bunch more shapes
 - [ ] Clean up the SVG renderer shapes

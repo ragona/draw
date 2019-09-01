@@ -1,12 +1,13 @@
 [package]
 name = "draw"
-version = "0.2.2"
+version = "0.2.3"
 authors = ["Ryan Ragona <ryan@ragona.com>"]
 edition = "2018"
 readme = "README.md"
 repository = "https://github.com/ragona/draw"
-description = "A tiny 2D drawing library"
+description = "A small 2D drawing library"
 license = "MIT"
+docs = "https://docs.rs/draw"
 
 [dependencies]
 rgb = "0.8.14"
