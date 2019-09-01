@@ -5,6 +5,8 @@ authors = ["Ryan Ragona <ryan@ragona.com>"]
 edition = "2018"
 readme = "README.md"
 repository = "https://github.com/ragona/draw"
+description = "A tiny 2D drawing library"
+license = "MIT"
 
 [dependencies]
 rgb = "0.8.14"
