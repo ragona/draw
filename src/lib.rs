@@ -1,17 +1,15 @@
-//! Draw focuses on providing an easy to use interface to create 2D drawings in Rust.
+//! `draw` is a simple 2D vector drawing library.
 //!
-//! # Quick Start
-//!
-//! The main Draw library focuses on the data that represents your drawing. This allows you to
-//! create a very complicated drawing without needing to worry about the output format. SVG, for
-//! example, requires quite a lot of String data manipulation -- none of this happens until the
-//! `render` step of the pipeline.
+//! - `Canvas` is a container that defines the size and top-level components of your drawing.
+//! - `Drawing` defines the position, style, and sub-components of a drawing.
+//! - `Shape` defines the geometry of an individual shape such as a `Circle` or `Line`.
+//! - `Style` defines the fill and stroke of a drawing.  
 //!
 //! The general flow for creating a piece of art is:
 //!
 //! 1. Create a `Canvas`
 //! 2. Create `Drawing` objects and add them to the Canvas `display_list`.
-//! 3. Position and style the objects
+//! 3. Position and style the drawings
 //! 4. Render and save the `Canvas` to whatever output format you want. (SVG, PNG, etc...)
 //!
 //! ## Basic Example
@@ -78,6 +76,7 @@ pub type DrawingId = usize;
 /// on integer bounds, so you may just want to stick to whole numbers. A more advanced version
 /// of this library would just directly use `Point2<T>`, but I decided to prioritze readability.
 /// We may want to revist that at some point.
+/// todo: I disagree with myself. Let consumers handle this.
 pub type Position = Point2<f32>;
 
 /// An alias for RGB<u8>

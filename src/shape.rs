@@ -2,6 +2,7 @@
 use crate::Position;
 
 /// Enum containing all supported shapes
+/// todo: Make this Shape<T> to support float sizes
 #[derive(Debug, Clone)]
 pub enum Shape {
     Rectangle {
@@ -49,7 +50,7 @@ pub enum LinePoint {
 /// let mut line = LineBuilder::new(Position::new(0.0, 0.0));
 ///
 /// line.line_to(Position{x: 50.0 ,y: 50.0 });
-/// line.line_to(Position{x: 50.0 ,y: 100.0 });
+/// line.curve_to(Position::new(50.0, 50.0), Position::new(20.0, 30.0));
 ///
 /// // Consume the builder, turn the line into a shape for use with the display list
 /// let shape: Shape = line.into();
@@ -60,6 +61,7 @@ pub struct LineBuilder {
 }
 
 impl LineBuilder {
+    /// Create a new LineBuilder with `start` as the origin
     pub fn new(start: Position) -> LineBuilder {
         LineBuilder {
             start,
@@ -67,15 +69,18 @@ impl LineBuilder {
         }
     }
 
+    /// Draw a straight line to `point`
     pub fn line_to(&mut self, point: Position) {
         self.points.push(LinePoint::Straight { point });
     }
 
+    /// Draw a curve to `point`, with a single control point at `curve`
     pub fn curve_to(&mut self, point: Position, curve: Position) {
         self.points
             .push(LinePoint::QuadraticBezierCurve { point, curve })
     }
 
+    /// Consume the LineBuilder, return a `Shape::Line`
     pub fn to_shape(self) -> Shape {
         Shape::Line {
             start: self.start,
