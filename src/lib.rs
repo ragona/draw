@@ -68,6 +68,7 @@ pub mod style;
 pub use crate::canvas::Canvas;
 pub use crate::render::svg::SvgRenderer;
 pub use crate::shape::{LineBuilder, Shape};
+pub use crate::style::Color;
 pub use crate::style::{Fill, Stroke, Style};
 
 /// Drawings are stored in a vector; this `usize` is a handle to access the child

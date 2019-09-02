@@ -1,5 +1,6 @@
 //! Vector object styles; Fill and Stroke data
 use crate::RGB;
+use rand::Rng;
 
 /// Shape fill
 #[derive(Clone, Debug, Default, PartialEq)]
@@ -64,6 +65,30 @@ impl Style {
         Style {
             fill: None,
             stroke: Some(Stroke::new(width, color)),
+        }
+    }
+}
+
+///Convenience methods for colors
+pub struct Color {}
+
+impl Color {
+    pub fn black() -> RGB {
+        RGB { r: 0, g: 0, b: 0 }
+    }
+    pub fn gray(shade: u8) -> RGB {
+        RGB {
+            r: shade,
+            g: shade,
+            b: shade,
+        }
+    }
+    pub fn random() -> RGB {
+        let mut rng = rand::thread_rng();
+        RGB {
+            r: rng.gen_range(0, 255),
+            g: rng.gen_range(0, 255),
+            b: rng.gen_range(0, 255),
         }
     }
 }

@@ -17,15 +17,6 @@ pub enum Shape {
     },
 }
 
-impl Shape {
-    pub fn new_line(start: Position) -> Self {
-        Shape::Line {
-            start,
-            points: vec![],
-        }
-    }
-}
-
 /// Enum that describes the various types of lines
 #[derive(Debug, Copy, Clone)]
 pub enum LinePoint {
