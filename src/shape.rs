@@ -1,5 +1,5 @@
 //! Shape data
-use crate::Position;
+use crate::Point;
 
 /// Enum containing all supported shapes
 /// todo: Make this Shape<T> to support float sizes
@@ -13,7 +13,7 @@ pub enum Shape {
         radius: u32,
     },
     Line {
-        start: Position,
+        start: Point,
         points: Vec<LinePoint>,
     },
 }
@@ -23,19 +23,19 @@ pub enum Shape {
 pub enum LinePoint {
     /// A hard corner
     /// `point` - end point of the line segment
-    Straight { point: Position },
+    Straight { point: Point },
     /// Curve with single control point at `curve`
     /// `point` - end point of the line segment
     /// `curve` - position the line will curve towards
-    QuadraticBezierCurve { point: Position, curve: Position },
+    QuadraticBezierCurve { point: Point, curve: Point },
     /// Curve with two control points
     /// `point` - end point of the line segment
     /// `curve_a` - control point that influences beginning of line
     /// `curve_a` - control point that influences end of line
     CubicBezierCurve {
-        point: Position,
-        curve_a: Position,
-        curve_b: Position,
+        point: Point,
+        curve_a: Point,
+        curve_b: Point,
     },
 }
 
@@ -46,23 +46,23 @@ pub enum LinePoint {
 ///
 /// ```
 /// use draw::shape::LineBuilder;
-/// use draw::{Position, Shape};
-/// let mut line = LineBuilder::new(Position::new(0.0, 0.0));
+/// use draw::{Point, Shape};
+/// let mut line = LineBuilder::new(Point::new(0.0, 0.0));
 ///
-/// line.line_to(Position{x: 50.0 ,y: 50.0 });
-/// line.curve_to(Position::new(50.0, 50.0), Position::new(20.0, 30.0));
+/// line.line_to(Point{x: 50.0 ,y: 50.0 });
+/// line.curve_to(Point::new(50.0, 50.0), Point::new(20.0, 30.0));
 ///
 /// // Consume the builder, turn the line into a shape for use with the display list
 /// let shape: Shape = line.into();
 /// ```
 pub struct LineBuilder {
-    start: Position,
+    start: Point,
     points: Vec<LinePoint>,
 }
 
 impl LineBuilder {
     /// Create a new LineBuilder with `start` as the origin
-    pub fn new(start: Position) -> LineBuilder {
+    pub fn new(start: Point) -> LineBuilder {
         LineBuilder {
             start,
             points: vec![],
@@ -70,12 +70,12 @@ impl LineBuilder {
     }
 
     /// Draw a straight line to `point`
-    pub fn line_to(&mut self, point: Position) {
+    pub fn line_to(&mut self, point: Point) {
         self.points.push(LinePoint::Straight { point });
     }
 
     /// Draw a curve to `point`, with a single control point at `curve`
-    pub fn curve_to(&mut self, point: Position, curve: Position) {
+    pub fn curve_to(&mut self, point: Point, curve: Point) {
         self.points
             .push(LinePoint::QuadraticBezierCurve { point, curve })
     }

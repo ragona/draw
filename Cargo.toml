@@ -12,5 +12,5 @@ documentation = "https://docs.rs/draw"
 [dependencies]
 rgb = "0.8.14"
 svg = "0.5.12"
-rand = "0.7.0"
+rand = {version="0.7.0", features=["small_rng"]}
 cgmath = "0.17.0"

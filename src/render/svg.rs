@@ -7,7 +7,7 @@ use crate::canvas::Canvas;
 use crate::render::Renderer;
 use crate::shape::{LinePoint, Shape};
 use crate::style::Style;
-use crate::{Drawing, Position, RGB};
+use crate::{Drawing, Point, RGB};
 use svg::node::element::path::Data;
 use svg::node::element::{tag, Element};
 
@@ -26,7 +26,7 @@ impl Renderer for SvgRenderer {
         let mut document = Document::new().set("viewBox", (0, 0, canvas.width, canvas.height));
         // first render the background
         if let Some(shape) = &canvas.background {
-            let origin = Position::new(0.0, 0.0);
+            let origin = Point::new(0.0, 0.0);
             document = render_shape(shape, &origin, &Style::default(), document);
         }
         // render all drawings from the bottom up
@@ -50,7 +50,7 @@ fn render_drawing(drawing: &Drawing, mut document: Document) -> Document {
     document
 }
 
-fn render_shape(shape: &Shape, position: &Position, style: &Style, document: Document) -> Document {
+fn render_shape(shape: &Shape, position: &Point, style: &Style, document: Document) -> Document {
     let mut element;
     // start by setting the shape of the element
     match shape {
@@ -82,7 +82,7 @@ fn rgb_to_str(color: &RGB) -> String {
     format!("rgb({},{},{})", color.r, color.g, color.b)
 }
 
-fn rect(width: u32, height: u32, position: &Position) -> Element {
+fn rect(width: u32, height: u32, position: &Point) -> Element {
     let mut element = Element::new(tag::Rectangle);
     element.assign("width", width);
     element.assign("height", height);
@@ -91,7 +91,7 @@ fn rect(width: u32, height: u32, position: &Position) -> Element {
     element
 }
 
-fn circle(radius: u32, position: &Position) -> Element {
+fn circle(radius: u32, position: &Point) -> Element {
     let mut element = Element::new(tag::Circle);
     element.assign("r", radius);
     element.assign("cx", position.x);
@@ -99,7 +99,7 @@ fn circle(radius: u32, position: &Position) -> Element {
     element
 }
 
-fn line(start: Position, points: &Vec<LinePoint>) -> Element {
+fn line(start: Point, points: &Vec<LinePoint>) -> Element {
     let mut data = Data::new().move_to((start.x, start.y));
     for point in points {
         match *point {

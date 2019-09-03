@@ -72,12 +72,7 @@ pub use crate::style::{Fill, Stroke, Style};
 /// Drawings are stored in a vector; this `usize` is a handle to access the child
 pub type DrawingId = usize;
 
-/// An alias for float positioning. Note that SVGs look crisper when objects are positioned
-/// on integer bounds, so you may just want to stick to whole numbers. A more advanced version
-/// of this library would just directly use `Point2<T>`, but I decided to prioritze readability.
-/// We may want to revist that at some point.
-/// todo: I disagree with myself. Let consumers handle this.
-pub type Position = Point2<f32>;
+pub type Point = Point2<f32>;
 
 /// An alias for RGB<u8>
 pub type RGB = rgb::RGB<u8>;
@@ -90,7 +85,7 @@ pub struct Drawing {
     /// The drawing's children, layered from bottom to top
     pub display_list: DisplayList,
     /// The top left location for the drawing
-    pub position: Position,
+    pub position: Point,
     /// Fill and stroke information for the drawing
     pub style: Style,
 }
@@ -102,7 +97,7 @@ impl Drawing {
             shape,
             style: Style::default(),
             display_list: DisplayList::new(),
-            position: Position::origin(),
+            position: Point::origin(),
         }
     }
 }

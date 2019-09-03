@@ -1,14 +1,15 @@
 use draw::*;
-use rand::Rng;
+use rand::rngs::SmallRng;
+use rand::{Rng, SeedableRng};
 
 #[test]
 fn lines() {
     let mut canvas = Canvas::new(100, 100);
 
     // create a line that starts in the top middle of the screen, then draw down the middle
-    let mut line = LineBuilder::new(Position::new(50.0, 10.0));
-    line.curve_to(Position::new(50.0, 50.0), Position::new(20.0, 30.0));
-    line.line_to(Position::new(50.0, 75.0));
+    let mut line = LineBuilder::new(Point::new(50.0, 10.0));
+    line.curve_to(Point::new(50.0, 50.0), Point::new(20.0, 30.0));
+    line.line_to(Point::new(50.0, 75.0));
 
     // turn that line into a shape, give it a stroke, and add it to the canvas
     let mut drawing = Drawing::new(line.into());
@@ -22,11 +23,11 @@ fn lines() {
 #[test]
 fn random_circles() {
     let mut canvas = Canvas::new(1000, 1000);
-    let mut rng = rand::thread_rng();
+    let mut rng = SmallRng::from_seed([0; 16]);
     let mut points = vec![];
 
     for _ in 0..10000 {
-        points.push(Position {
+        points.push(Point {
             x: rng.gen_range(250, 750) as f32,
             y: rng.gen_range(0, 1000) as f32,
         })
