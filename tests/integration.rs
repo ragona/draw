@@ -7,13 +7,16 @@ fn lines() {
     let mut canvas = Canvas::new(100, 100);
 
     // create a line that starts in the top middle of the screen, then draw down the middle
-    let mut line = LineBuilder::new(Point::new(50.0, 10.0));
-    line.curve_to(Point::new(50.0, 50.0), Point::new(20.0, 30.0));
-    line.line_to(Point::new(50.0, 75.0));
+    let line = LineBuilder::new(50.0, 10.0)
+        .curve_to(50.0, 50.0, 75.0, 30.0)
+        .line_to(50.0, 75.0)
+        .build();
 
     // turn that line into a shape, give it a stroke, and add it to the canvas
-    let mut drawing = Drawing::new(line.into());
-    drawing.style = Style::stroked(1, RGB::new(0, 0, 0));
+    let drawing = Drawing::new()
+        .with_shape(line)
+        .with_style(Style::stroked(1, RGB::new(0, 0, 0)));
+
     canvas.display_list.add(drawing);
 
     // save the canvas as an svg
@@ -34,7 +37,7 @@ fn random_circles() {
     }
 
     for point in points {
-        let mut circle = Drawing::new(Shape::Circle { radius: 25 });
+        let mut circle = Drawing::new().with_shape(Shape::Circle { radius: 25 });
         circle.position.x = point.x;
         circle.position.y = point.y;
         circle.style = Style::stroked(2, Color::random());

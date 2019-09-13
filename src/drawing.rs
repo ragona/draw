@@ -23,17 +23,25 @@ impl Drawing {
             position: Point::origin(),
         }
     }
-}
 
-pub struct DrawingBuilder {
-    drawing: Drawing,
-}
+    pub fn with_shape(mut self, shape: Shape) -> Drawing {
+        self.shape = Some(shape);
+        self
+    }
 
-impl DrawingBuilder {
-    pub fn new() -> DrawingBuilder {
-        DrawingBuilder {
-            drawing: Drawing::new(),
-        }
+    pub fn with_style(mut self, style: Style) -> Drawing {
+        self.style = style;
+        self
+    }
+
+    pub fn with_position(mut self, position: Point) -> Drawing {
+        self.position = position;
+        self
+    }
+
+    pub fn with_xy(mut self, x: f32, y: f32) -> Drawing {
+        self.position = Point { x, y };
+        self
     }
 }
 
