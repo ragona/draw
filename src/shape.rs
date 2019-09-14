@@ -18,6 +18,8 @@ pub enum Shape {
     },
 }
 
+pub enum ShapeBuilder {}
+
 /// Enum that describes the various types of lines
 #[derive(Debug, Copy, Clone)]
 pub enum LinePoint {
@@ -47,23 +49,21 @@ pub enum LinePoint {
 /// ```
 /// use draw::shape::LineBuilder;
 /// use draw::{Point, Shape};
-/// let mut line = LineBuilder::new(Point::new(0.0, 0.0));
 ///
-/// line.line_to(Point{x: 50.0 ,y: 50.0 });
-/// line.curve_to(Point::new(50.0, 50.0), Point::new(20.0, 30.0));
-///
-/// // Consume the builder, turn the line into a shape for use with the display list
-/// let shape: Shape = line.into();
+/// let line = LineBuilder::new(0.0, 0.0)
+///     .curve_to(50.0, 50.0, 20.0, 30.0)
+///     .line_to(50.0, 75.0)
+///     .build();
 /// ```
-pub struct LineBuilder {
+pub struct Line {
     start: Point,
     points: Vec<LinePoint>,
 }
 
-impl LineBuilder {
-    /// Create a new LineBuilder with `start` as the origin
-    pub fn new(start: Point) -> LineBuilder {
-        LineBuilder {
+impl Line {
+    /// Create a new Line with `start` as the origin
+    pub fn new(start: Point) -> Line {
+        Line {
             start,
             points: vec![],
         }
@@ -80,7 +80,7 @@ impl LineBuilder {
             .push(LinePoint::QuadraticBezierCurve { point, curve })
     }
 
-    /// Consume the LineBuilder, return a `Shape::Line`
+    /// Consume the Line, return a `Shape::Line`
     pub fn to_shape(self) -> Shape {
         Shape::Line {
             start: self.start,
@@ -89,8 +89,34 @@ impl LineBuilder {
     }
 }
 
-impl From<LineBuilder> for Shape {
-    fn from(line: LineBuilder) -> Shape {
+pub struct LineBuilder {
+    line: Line,
+}
+
+impl LineBuilder {
+    pub fn new(x: f32, y: f32) -> LineBuilder {
+        LineBuilder {
+            line: Line::new(Point::new(x, y)),
+        }
+    }
+    pub fn line_to(mut self, x: f32, y: f32) -> LineBuilder {
+        self.line.line_to(Point::new(x, y));
+        self
+    }
+
+    pub fn curve_to(mut self, x: f32, y: f32, curve_x: f32, curve_y: f32) -> LineBuilder {
+        self.line
+            .curve_to(Point::new(x, y), Point::new(curve_x, curve_y));
+        self
+    }
+
+    pub fn build(self) -> Shape {
+        self.line.to_shape()
+    }
+}
+
+impl From<Line> for Shape {
+    fn from(line: Line) -> Shape {
         line.to_shape()
     }
 }

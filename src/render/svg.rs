@@ -41,7 +41,9 @@ impl Renderer for SvgRenderer {
 /// Recursively render the drawing from the bottom up
 fn render_drawing(drawing: &Drawing, mut document: Document) -> Document {
     // first, render this drawing's shape
-    document = render_shape(&drawing.shape, &drawing.position, &drawing.style, document);
+    if let Some(shape) = &drawing.shape {
+        document = render_shape(shape, &drawing.position, &drawing.style, document);
+    }
     // next, render each drawing from the bottom up
     for drawing in &drawing.display_list.drawings {
         document = render_drawing(drawing, document);
