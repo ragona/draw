@@ -3,7 +3,7 @@
 
 A small Rust library for 2D drawing. 
 Simple display list and vector shapes. 
-Currently supports SVG output, designed to also support PNG and other formats.
+Currently supports SVG and PNG output, designed to also support other formats.
 
 ## Example
 ```rust
@@ -43,7 +43,7 @@ render::save(
 - [x] Draw anything other than a rectangle
 - [x] Positions
 - [x] Styles 
-- [ ] Bitmap image output
+- [x] Bitmap image output
 
 ## Useful Commands
 
