@@ -56,6 +56,7 @@ pub mod style;
 
 pub use crate::canvas::Canvas;
 pub use crate::drawing::{DisplayList, Drawing};
+pub use crate::render::bitmap::PngRenderer;
 pub use crate::render::svg::SvgRenderer;
 pub use crate::shape::{LineBuilder, Shape};
 pub use crate::style::Color;
